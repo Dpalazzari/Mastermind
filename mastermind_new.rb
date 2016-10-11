@@ -1,33 +1,34 @@
 require 'pry'
 
 class Mastermind
-    LETTERS = ["R", "G", "B", "Y"]
 
-    attr_reader :name,
-                :user_input
+    # attr_reader
+
+    attr_accessor :game_array,
+                  :guess,
+                  :user_input,
+                  :new_game_array
 
 
     def initialize
-    @name = name
-    @game_array = LETTERS
-    @user_data
-    @guess = 0
+      @game_array = ["R", "G", "B", "Y"]
+      @guess = 0
 
     end
 
     def welcome_user
-        puts "Welcome to MASTERMIND, user."
-        puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+      p "Welcome to MASTERMIND, user."
+      p "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
     end
 
     def instructions
-          system 'clear'
-            puts "1) It is your objective to guess the correct sequence of colors."
-            puts "2) You must guess using (R)ED, (B)LUE, (G)REEN, and (Y)ELLOW."
-            puts "3) It is the user's job to find the correct colors AND the correct sequence of colors."
-            puts "4) You will recieve hints for the position of the colors in the sequence."
-            puts "5) You will recieve 5 tries to guess the sequence and the colors, otherwise, you will lose."
-            puts "Are the instructions clear? (y/n)"
+      system 'clear'
+        puts "1) It is your objective to guess the correct sequence of colors."
+        puts "2) You must guess using (R)ED, (B)LUE, (G)REEN, and (Y)ELLOW."
+        puts "3) It is the user's job to find the correct colors AND the correct sequence of colors."
+        puts "4) You will recieve hints for the position of the colors in the sequence."
+        puts "5) You will recieve 5 tries to guess the sequence and the colors, otherwise, you will lose."
+        puts "Are the instructions clear? (y/n)"
     end
 
     def not_understand_instructions
@@ -38,7 +39,7 @@ class Mastermind
 
     def quit_game
         system 'clear'
-        puts "See you later, user. Come back aand play again, sometime."
+        puts "See you later, user. Come back and play again, sometime."
         exit
     end
 
@@ -77,21 +78,19 @@ class Mastermind
 
     def player_name
         puts "What is your name, user? > "
-        @name = gets.chomp
-        #continue on to next method
-            if @name == ""
+        name = gets.chomp
+            if name == ""
                 puts "Come now, even I have a name."
                 player_name
             else
                 system 'clear'
-                puts "Welcome to MASTERMIND, #{@name.capitalize}."
+                puts "Welcome to MASTERMIND, #{name.capitalize}."
                 guess_counter
             end
     end
 
-    def generate_sequence #need to generate a random 4 element array out of the LETTERS
-       LETTERS.sample(4)
-        # game_flow
+    def generate_sequence
+       @new_game_array = @game_array.sample(4)
     end
 
     def instructions_two
@@ -102,7 +101,7 @@ class Mastermind
 
     def instructions_three
       puts "\n"
-      puts "Choose from these LETTERS: #{LETTERS}"
+      puts "Choose from these colors: #{game_array}"
       puts "\n"
       print "Please enter your guess for the four letter code: \n"
     end
@@ -113,35 +112,43 @@ class Mastermind
       done_guessing = false
       until done_guessing
         instructions_three
-        user_data = gets.chomp.downcase.chars
-        #assigning to instance variable
-          if user_data.count < 4#All i have is array, now i need to check each element in the array
-            puts "You have not made enough selections. Please re-guess."
-            user_data = gets.chomp.downcase.chars
-
-          elsif user_data.count > 4
-            puts "You have selected too many characters, please guess again."
-            user_data = gets.chomp.downcase.chars
-            binding.pry
-          elsif user_data.all? do |letter|
-              if LETTERS.include?(letter) == false
-                "Your selection includes colors not available to this game."
-                user_data = gets.chomp.downcase.chars
-              end
-            end
-          end
+          cheat_options
           done_guessing = true
         end
-          #call next method: check_the_guesses
+        compare_answer(user_data)
+        end
+      end
+
+      def cheat_options
+        user_data = gets.chomp.downcase.chars
+        if user_data.include?("c")
+          puts "The secret key is #{@new_game_array}, you're sooooo good at this game!"
+          user_data = gets.chomp.downcase.chars
+        elsif user_data.include?("q")
+          quit_game
+        elsif user_data.count < 4 #All i have is array, now i need to check each element in the array
+          puts "You have not made enough selections. Please re-guess."
+          user_data = gets.chomp.downcase.chars
+
+        elsif user_data.count > 4
+          puts "You have selected too many characters, please guess again."
+          user_data = gets.chomp.downcase.chars
+
+        elsif user_data.all? do |letter|
+            if game_array.include?(letter) == false
+              "Your selection includes colors not available to this game."
+              user_data = gets.chomp.downcase.chars
+            end
+          end
         end
       end
 
 
-    def check_the_guesses
-      @guess += 1
+    # def compare_answer(user_data)
+    #   @guess += 1
 
 
-end
+
 
   megamind = Mastermind.new
   megamind.game_set_up
