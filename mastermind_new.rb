@@ -7,19 +7,22 @@ class Mastermind
     attr_accessor :game_array,
                   :guess,
                   :user_data,
-                  :new_game_array
+                  :new_game_array,
+                  :number_of_guesses,
+                  :name
 
 
     def initialize
       @game_array = ["R", "G", "B", "Y"]
       @guess = []
       @user_data = []
+      @number_of_guesses = 0
 
     end
 
     def welcome_user
-      p "Welcome to MASTERMIND, user."
-      p "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+      puts "Welcome to MASTERMIND, user."
+      puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
     end
 
     def instructions
@@ -28,7 +31,8 @@ class Mastermind
         puts "2) You must guess using (R)ED, (B)LUE, (G)REEN, and (Y)ELLOW."
         puts "3) It is the user's job to find the correct colors AND the correct sequence of colors."
         puts "4) You will recieve hints for the position of the colors in the sequence."
-        puts "5) You will recieve 5 tries to guess the sequence and the colors, otherwise, you will lose."
+        puts "5) You will recieve 10 tries to guess the sequence and the colors, otherwise, you will lose."
+        puts "\n"
         puts "Are the instructions clear? (y/n)"
     end
 
@@ -79,7 +83,7 @@ class Mastermind
 
     def player_name
         puts "What is your name, user? > "
-        name = gets.chomp
+        @name = gets.chomp
             if name == ""
                 puts "Come now, even I have a name."
                 player_name
@@ -88,8 +92,9 @@ class Mastermind
                 puts "Welcome to MASTERMIND, #{name.capitalize}."
                 generate_sequence
                 instructions_two
-                make_your_guess_known
                 instructions_three
+                make_your_guess_known
+
             end
     end
 
@@ -100,7 +105,10 @@ class Mastermind
     def instructions_two
         puts "I have generated a beginner sequence with four elements made up of: (r)ed,"
         puts "(g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
-        puts "Type (c)heat to reveal the answer at any time...don't worry you're still soooo smart..."
+        puts "The user can (c)heat if they find the game too hard."
+        puts "-" * 75
+        puts "\n"
+        puts "Please make your first guess: "
     end
 
     def instructions_three
@@ -112,28 +120,37 @@ class Mastermind
 
     def make_your_guess_known
       done_guessing = false
-      until done_guessing == true
-        @user_data = gets.chomp.downcase.chars
-        if user_data.include?("c")
+      until done_guessing
+        @user_data = gets.chomp.upcase.chars
+        if user_data.include?("C")
           secret_key
-        elsif user_data.include?("q")
+        elsif user_data.include?("Q")
           quit_game
         elsif incorrect_size?(user_data)
           puts "\n"
           puts "You have selected the wrong number of characters, please guess again."
           puts "-" * 69
-          puts "Re-enter your guess, please."
         else
-          used_the_right_colors
-          puts "\n"
-          puts "Your guess is valid."
-          puts "-" * 20
+          check_guess
         end
-        # when done_guessing = true
-          finish_the_game
       end
+
     end
-  end
+
+    def check_guess
+      @number_of_guesses += 1
+      used_the_right_colors
+      answer_accepted
+      win if how_many_in_sequence_are_right == 4
+      lose if @number_of_guesses > 9
+      puts "You have made #{number_of_guesses} guesses."
+    end
+
+    def answer_accepted
+      puts "\n"
+      puts "Answer submitted."
+      puts "-" * 16
+    end
 
     def secret_key
       system 'clear'
@@ -142,10 +159,6 @@ class Mastermind
       puts "Now type that sequence in..."
       make_your_guess_known
     end
-
-    # def not_allowed_colors?(user_data)
-    #   user_data.sort != @new_game_array.sort
-    # end
 
     def incorrect_size?(user_data)
       user_data.count != 4
@@ -156,39 +169,33 @@ class Mastermind
     end
 
     def finish_the_game
-      how_many_in_sequence_are_right(user_data)
+      how_many_in_sequence_are_right
     end
 
-    def how_many_in_sequence_are_right(user_data)
-      correct_guess = 0
+    def how_many_in_sequence_are_right
+      correct_colors = 0
       @user_data.each_with_index do |letter, index|
         if letter == @new_game_array[index]
-          correct_guess += 1
-          puts "You have #{correct_guess} color in the correct spot out of your 4 guesses."
+          correct_colors += 1
         end
       end
+      puts "You have #{correct_colors} colors in the correct position, of your 4 choices."
+      correct_colors
     end
 
-    # def guess_count_so_far
-    #   number_of_guesses = 1
-    #   while number_of_guesses < 11
-    #     number_of_guesses += 1
-    #     puts "You have made #{number_of_guesses} guesses."
-    #     # make_your_guess_known
-    #   end
-    # end
-
-    def guess_count_so_far
-      10.times do |letter|
-        @user_data.push(make_your_guess_known)
-          if @user_data == @new_game_array
-            puts "Congrats, you win!"
-          else
-            puts "Sorry, you have exceeded your max number of guesses. You lose."
-          end
-      end
+    def lose
+      system 'clear'
+      puts "You have lost. You don't deserve to know the answer, either."
+      quit_game
     end
-    # def compare_answer(user_data)
-    #   @guess += 1
-    megamind = Mastermind.new
-    megamind.game_set_up
+
+    def win
+        system 'clear'
+        puts "You win, #{@name.capitalize}. It only took you #{number_of_guesses} guesses!"
+        puts "You're a Mastermind!1!1!!".upcase
+        exit
+    end
+
+end
+megamind = Mastermind.new
+megamind.game_set_up
