@@ -163,7 +163,7 @@ class Mastermind
     def incorrect_size?(user_data)
       user_data.count != 4
     end
-    
+
     def used_the_right_colors
       user_data.sort == @game_array.sort
     end
@@ -186,16 +186,26 @@ class Mastermind
     def lose
       system 'clear'
       puts "You have lost. You don't deserve to know the answer, either."
-      quit_game
+      play_again?
     end
 
     def win
         system 'clear'
         puts "You win, #{@name.capitalize}. It only took you #{number_of_guesses} guesses!"
         puts "You're a Mastermind!1!1!!".upcase
-        exit
+        play_again?
+    end
+
+    def play_again?
+      puts "Do you want to play again, user? (y/n)"
+      user_input = gets.chomp
+        if user_input.to_s.start_with?("y")
+          load './mastermind_new.rb'
+        else
+          quit_game
+        end
     end
 
 end
-megamind = Mastermind.new
-megamind.game_set_up
+# megamind = Mastermind.new
+# megamind.game_set_up
