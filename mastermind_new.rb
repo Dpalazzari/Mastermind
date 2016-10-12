@@ -6,13 +6,14 @@ class Mastermind
 
     attr_accessor :game_array,
                   :guess,
-                  :user_input,
+                  :user_data,
                   :new_game_array
 
 
     def initialize
       @game_array = ["R", "G", "B", "Y"]
-      @guess = 0
+      @guess = []
+      @user_data = []
 
     end
 
@@ -85,7 +86,10 @@ class Mastermind
             else
                 system 'clear'
                 puts "Welcome to MASTERMIND, #{name.capitalize}."
-                guess_counter
+                generate_sequence
+                instructions_two
+                make_your_guess_known
+                instructions_three
             end
     end
 
@@ -106,49 +110,85 @@ class Mastermind
       print "Please enter your guess for the four letter code: \n"
     end
 
-    def guess_counter
-      generate_sequence
-      instructions_two
+    def make_your_guess_known
       done_guessing = false
-      until done_guessing
-        instructions_three
-          cheat_options
-          done_guessing = true
-        end
-        compare_answer(user_data)
-        end
-      end
-
-      def cheat_options
-        user_data = gets.chomp.downcase.chars
+      until done_guessing == true
+        @user_data = gets.chomp.downcase.chars
         if user_data.include?("c")
-          puts "The secret key is #{@new_game_array}, you're sooooo good at this game!"
-          user_data = gets.chomp.downcase.chars
+          secret_key
         elsif user_data.include?("q")
           quit_game
-        elsif user_data.count < 4 #All i have is array, now i need to check each element in the array
-          puts "You have not made enough selections. Please re-guess."
-          user_data = gets.chomp.downcase.chars
+        elsif incorrect_size?(user_data)
+          puts "\n"
+          puts "You have selected the wrong number of characters, please guess again."
+          puts "-" * 69
+          puts "Re-enter your guess, please."
+        else
+          used_the_right_colors
+          puts "\n"
+          puts "Your guess is valid."
+          puts "-" * 20
+        end
+        # when done_guessing = true
+          finish_the_game
+      end
+    end
+  end
 
-        elsif user_data.count > 4
-          puts "You have selected too many characters, please guess again."
-          user_data = gets.chomp.downcase.chars
+    def secret_key
+      system 'clear'
+      puts "The secret key is #{@new_game_array}. What a shame, you were doing SO well!"
+      puts "-" * 77
+      puts "Now type that sequence in..."
+      make_your_guess_known
+    end
 
-        elsif user_data.all? do |letter|
-            if game_array.include?(letter) == false
-              "Your selection includes colors not available to this game."
-              user_data = gets.chomp.downcase.chars
-            end
-          end
+    # def not_allowed_colors?(user_data)
+    #   user_data.sort != @new_game_array.sort
+    # end
+
+    def incorrect_size?(user_data)
+      user_data.count != 4
+    end
+
+    def used_the_right_colors
+      user_data.sort == @game_array.sort
+    end
+
+    def finish_the_game
+      how_many_in_sequence_are_right(user_data)
+    end
+
+    def how_many_in_sequence_are_right(user_data)
+      correct_guess = 0
+      @user_data.each_with_index do |letter, index|
+        if letter == @new_game_array[index]
+          correct_guess += 1
+          puts "You have #{correct_guess} color in the correct spot out of your 4 guesses."
         end
       end
+    end
 
+    # def guess_count_so_far
+    #   number_of_guesses = 1
+    #   while number_of_guesses < 11
+    #     number_of_guesses += 1
+    #     puts "You have made #{number_of_guesses} guesses."
+    #     # make_your_guess_known
+    #   end
+    # end
 
+    def guess_count_so_far
+      10.times do |letter|
+        @user_data.push(make_your_guess_known)
+          if @user_data == @new_game_array
+            puts "Congrats, you win!"
+          else
+            puts "Sorry, you have exceeded your max number of guesses. You lose."
+          end
+      end
+    end
     # def compare_answer(user_data)
     #   @guess += 1
-
-
-
-
-  megamind = Mastermind.new
-  megamind.game_set_up
+    megamind = Mastermind.new
+    megamind.game_set_up

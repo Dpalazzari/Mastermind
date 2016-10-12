@@ -28,4 +28,8 @@ class MasterMindTest < Minitest::Test
     assert_equal "", mastermind.analyze_user_input(input)
   end
 
+  def test_if_it_does_not_name_a_player
+    mastermind = Mastermind.new
+  
+
 end
