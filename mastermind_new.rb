@@ -163,7 +163,7 @@ class Mastermind
     def incorrect_size?(user_data)
       user_data.count != 4
     end
-
+    
     def used_the_right_colors
       user_data.sort == @game_array.sort
     end
