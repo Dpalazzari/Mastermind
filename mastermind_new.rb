@@ -30,7 +30,7 @@ class Mastermind
         puts "1) It is your objective to guess the correct sequence of colors."
         puts "2) You must guess using (R)ED, (B)LUE, (G)REEN, and (Y)ELLOW."
         puts "3) It is the user's job to find the correct colors AND the correct sequence of colors."
-        puts "4) You will recieve hints how many of your guesses are correct."
+        puts "4) You will recieve hints of how many of your guesses are correct."
         puts "5) You will recieve 10 tries to guess the sequence and the colors, otherwise, you will lose."
         puts "\n"
         puts "Are the instructions clear? (y/n)"
@@ -190,7 +190,7 @@ class Mastermind
     def win
         system 'clear'
         puts "Your guess of #{@user_data} was correct, #{@name.capitalize}. It only took you #{number_of_guesses} guesses!"
-        puts "You would challenge megamind himself!".upcase
+        puts "You would challenge Mega-mind himself!".upcase
         play_again?
     end
 
