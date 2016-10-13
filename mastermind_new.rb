@@ -13,7 +13,7 @@ class Mastermind
 
 
     def initialize
-      @game_array = ["R", "G", "B", "Y"]
+      @game_array = ["R", "G", "B", "Y","R", "G", "B", "Y","R", "G", "B", "Y"]
       @guess = []
       @user_data = []
       @number_of_guesses = 0
@@ -30,7 +30,7 @@ class Mastermind
         puts "1) It is your objective to guess the correct sequence of colors."
         puts "2) You must guess using (R)ED, (B)LUE, (G)REEN, and (Y)ELLOW."
         puts "3) It is the user's job to find the correct colors AND the correct sequence of colors."
-        puts "4) You will recieve hints for the position of the colors in the sequence."
+        puts "4) You will recieve hints how many of your guesses are correct."
         puts "5) You will recieve 10 tries to guess the sequence and the colors, otherwise, you will lose."
         puts "\n"
         puts "Are the instructions clear? (y/n)"
@@ -94,8 +94,7 @@ class Mastermind
                 instructions_two
                 instructions_three
                 make_your_guess_known
-
-            end
+              end
     end
 
     def generate_sequence
@@ -105,17 +104,17 @@ class Mastermind
     def instructions_two
         puts "I have generated a beginner sequence with four elements made up of: (r)ed,"
         puts "(g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
-        puts "The user can (c)heat if they find the game too hard."
-        puts "-" * 75
         puts "\n"
-        puts "Please make your first guess: "
+        puts "The user can (c)heat if they find the game too hard. COLORS CAN BE USED MORE THAN ONCE."
+        puts "-" * 87
+        puts "-" * 87
     end
 
     def instructions_three
       puts "\n"
-      puts "Choose from these colors: #{game_array}"
+      puts "Choose from these colors: R, G, Y, B"
       puts "\n"
-      print "Please enter your guess for the four letter code: \n"
+      print "Please enter your 4 guesses for the Mastermind  code: \n"
     end
 
     def make_your_guess_known
@@ -134,7 +133,6 @@ class Mastermind
           check_guess
         end
       end
-
     end
 
     def check_guess
@@ -147,7 +145,7 @@ class Mastermind
     end
 
     def answer_accepted
-      puts "\n"
+      puts "-" * 16
       puts "Answer submitted."
       puts "-" * 16
     end
@@ -155,7 +153,7 @@ class Mastermind
     def secret_key
       system 'clear'
       puts "The secret key is #{@new_game_array}. What a shame, you were doing SO well!"
-      puts "-" * 77
+      puts "-" * 80
       puts "Now type that sequence in..."
       make_your_guess_known
     end
@@ -191,8 +189,8 @@ class Mastermind
 
     def win
         system 'clear'
-        puts "You win, #{@name.capitalize}. It only took you #{number_of_guesses} guesses!"
-        puts "You're a Mastermind!1!1!!".upcase
+        puts "Your guess of #{@user_data} was correct, #{@name.capitalize}. It only took you #{number_of_guesses} guesses!"
+        puts "You would challenge megamind himself!".upcase
         play_again?
     end
 
@@ -207,5 +205,6 @@ class Mastermind
     end
 
 end
-# megamind = Mastermind.new
-# megamind.game_set_up
+
+megamind = Mastermind.new
+megamind.game_set_up
