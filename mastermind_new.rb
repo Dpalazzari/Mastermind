@@ -166,10 +166,6 @@ class Mastermind
       user_data.sort == @game_array.sort
     end
 
-    def finish_the_game
-      how_many_in_sequence_are_right
-    end
-
     def how_many_in_sequence_are_right
       correct_colors = 0
       @user_data.each_with_index do |letter, index|
