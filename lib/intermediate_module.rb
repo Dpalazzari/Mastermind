@@ -1,12 +1,21 @@
 module IntermediateInstructions
 
+  def welcome_to_mastermind
+    system 'clear'
+    puts "-" * 28
+    puts "Welcome to MASTERMIND, #{name.capitalize}."
+    puts "-" * 28
+  end
+
   def instructions_one
       puts "I have generated an intermediate sequence with five elements made up of: (r)ed,"
       puts "(g)reen, (b)lue, (y)ellow, and (p)urple. Use (q)uit at any time to end the game."
+      puts "~" * 87
+      puts "Be sure and guess the right number of colors, errors will be counted as a guess."
       puts "\n"
       puts "The user can (c)heat if they find the game too hard. COLORS CAN BE USED MORE THAN ONCE."
-      puts "-" * 87
-      puts "-" * 87
+      puts "~" * 87
+      puts "~" * 87
   end
 
   def instructions_two
@@ -18,8 +27,8 @@ module IntermediateInstructions
 
   def wrong_number_characters
     puts "\n"
-    puts "You have selected the wrong number of characters, please guess again."
-    puts "-" * 69
+    puts "Be careful, you have selected the wrong number of characters."
+    puts "=" * 69
   end
 
   def total_guess_count
@@ -27,9 +36,9 @@ module IntermediateInstructions
   end
 
   def answer_accepted
-    puts "-" * 16
+    puts "~" * 16
     puts "Answer submitted."
-    puts "-" * 16
+    puts "~" * 16
   end
 
   def tell_secret_key
@@ -43,10 +52,10 @@ module IntermediateInstructions
   end
 
   def correct_guess
-    puts "Your guess of #{@user_data.join( ", ")} was correct, . It only took you #{number_of_guesses} guesses!"
-    puts "-" * 90
-    puts "You completed the game in #{@minutes} minutes and #{@seconds} seconds!"
-    puts "-" * 90
+    puts "Your guess of #{@user_data.join( ", ")} was correct. It only took you #{number_of_guesses} guesses!"
+    puts "*" * 90
+    puts "Congrats, #{name.capitalize}! You completed the game in #{@minutes} minutes and #{@seconds} seconds!"
+    puts "*" * 90
     puts "Stephen Hawkin would be impressed...unless you cheated."
   end
 
