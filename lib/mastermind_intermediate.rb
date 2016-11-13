@@ -16,8 +16,8 @@ class MastermindIntermediate
     @game_array = ["R", "G", "B", "Y", "P",
                    "R", "G", "B", "Y", "P",
                    "R", "G", "B", "Y", "P"]
-    @guess = []
-    @user_data = []
+    @guess      = []
+    @user_data  = []
     @number_of_guesses = 0
   end
 

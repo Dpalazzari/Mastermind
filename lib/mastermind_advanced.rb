@@ -15,8 +15,8 @@ class MastermindAdvanced
                    "O", "R", "G", "B", "Y",
                    "P", "O", "R", "G", "B",
                    "Y", "P", "O"]
-    @guess = []
-    @user_data = []
+    @guess      = []
+    @user_data  = []
     @number_of_guesses = 0
   end
 
@@ -36,15 +36,10 @@ class MastermindAdvanced
     done_guessing = false
     until done_guessing
       @user_data = gets.chomp.upcase.chars
-      if user_data.include?("C")
-        secret_key
-      elsif user_data.include?("Q")
-        quit_game
-      elsif incorrect_size?(user_data)
-        wrong_number_characters
-      else
-        check_guess
-      end
+      secret_key if user_data.include?("C")
+      quit_game  if user_data.include?("Q")
+      wrong_number_characters if incorrect_size?(user_data)
+      check_guess
     end
   end
 
@@ -112,5 +107,5 @@ class MastermindAdvanced
       see_you_later
       exit
   end
-  
+
 end

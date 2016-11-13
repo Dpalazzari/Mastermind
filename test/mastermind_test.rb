@@ -1,6 +1,6 @@
 gem 'minitest'
 require 'minitest/autorun'
-require 'minitest/nyan_cat'
+require 'minitest/pride'
 require './lib/mastermind.rb'
 require 'pry'
 
@@ -25,7 +25,7 @@ class MasterMindTest < Minitest::Test
       end
       assert_equal "Welcome", out[0].strip.split[0].to_s
       assert_equal "(q)uit?", out[0].strip.split[-1].to_s
-    end
+  end
 
 
   def test_it_instructs_the_user

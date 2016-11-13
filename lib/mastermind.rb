@@ -62,7 +62,7 @@ class Mastermind
                 puts "Welcome to MASTERMIND, #{name.capitalize}."
                 puts "-" * 28
                 determine_the_difficulty
-              end
+            end
     end
 
     def determine_the_difficulty
@@ -75,5 +75,5 @@ class Mastermind
     end
 end
 
-megamind = Mastermind.new
-megamind.game_set_up
+# megamind = Mastermind.new
+# megamind.game_set_up
