@@ -8,6 +8,7 @@ class MastermindAdvanced
               :guess,
               :user_data,
               :number_of_guesses,
+              :name,
               :start_game
 
   def initialize
@@ -26,10 +27,23 @@ class MastermindAdvanced
 
   def start_game
     generate_sequence
-    instructions_one
-    instructions_two
-    @start_time = Time.new
-    make_your_guess_known
+    player_name
+  end
+
+  def player_name
+    puts "What is your name, user? > "
+    @name = gets.chomp
+      if name == ""
+        puts "Come now, even I have a name."
+        player_name
+      else
+        system 'clear'
+        welcome_to_mastermind
+        instructions_one
+        instructions_two
+        @start_time = Time.new
+        make_your_guess_known
+      end
   end
 
   def make_your_guess_known
@@ -98,14 +112,14 @@ class MastermindAdvanced
   def play_again?
     ask_play_again
     user_input = gets.chomp
-      load './lib/mastermind.rb' if user_input.to_s.start_with?("y")
-      quit_game
+    load './lib/mastermind.rb' if user_input.to_s.start_with?("y")
+    quit_game
   end
 
   def quit_game
-      system 'clear'
-      see_you_later
-      exit
+    system 'clear'
+    see_you_later
+    exit
   end
 
 end

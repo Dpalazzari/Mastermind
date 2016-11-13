@@ -21,6 +21,7 @@ module MastermindInstructions
       system 'clear'
       puts "Just wing it, and figure it out as you play, okay?"
       puts "If you cannot figure it out, MASTERMIND is not for you."
+      puts "-" * 50
   end
 
   def quit_game
