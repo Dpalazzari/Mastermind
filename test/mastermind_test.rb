@@ -37,14 +37,5 @@ class MasterMindTest < Minitest::Test
       assert_equal "(y/n)", out[0].strip.split[-1].to_s
   end
 
-  def test_it_tells_user_to_just_wing_it
-    mastermind = Mastermind.new
-    out = capture_io do
-        mastermind.not_understand_instructions
-      end
-      assert_equal "Just", out[0].strip.split[0].to_s
-      assert_equal "you.", out[0].strip.split[-1].to_s
-  end
-
 
 end

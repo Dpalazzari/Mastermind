@@ -56,5 +56,5 @@ class Mastermind
     end
 end
 
-megamind = Mastermind.new
-megamind.game_set_up
+# megamind = Mastermind.new
+# megamind.game_set_up
